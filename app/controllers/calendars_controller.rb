@@ -33,8 +33,14 @@ class CalendarsController < ApplicationController
       today_plans = []  #変数定義
       plans.each do |plan|  #1週間分の{date:,plan:}を日ごとにplanだけまとめていく
         today_plans.push(plan.plan) if plan.date == @todays_date + x
+      end
+
+        wday_num = @todays_date.wday + x
+        if wday_num >= 7
+          wday_num = wday_num -7
         end
-        days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans}
+
+        days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans, wday: week_days[wday_num]}
         @week_days.push(days)
       end
     end
